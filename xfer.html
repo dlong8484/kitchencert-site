@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>xfer</title>
+<script>
+(async () => {
+  const names = decodeURIComponent(location.hash.slice(1)).split(',').filter(Boolean);
+  const out = [];
+  for (const n of names) { const r = await fetch('shots/' + n, {cache: 'no-store'}); out.push({name: n, blob: await r.blob()}); }
+  const target = window.opener || window.parent;
+  target.postMessage({kcxfer: out}, 'https://appstoreconnect.apple.com');
+})();
+</script>
